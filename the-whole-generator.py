@@ -236,7 +236,7 @@ while iters < 50000:
 # Ввод количества покупок в файле
 
 curtime = str(time.time())
-
+passed_out = 10000
 with open(f'A:/educ/algos/dataset-generation/output/{curtime}.csv', 'a+', newline='') as mycsvfile:
     writer = csv.writer(mycsvfile, dialect='excel', delimiter=';', quotechar='\'')
     while ite < (iters + 1):
@@ -249,8 +249,14 @@ with open(f'A:/educ/algos/dataset-generation/output/{curtime}.csv', 'a+', newlin
                 break
         card_util = randint(1, 5)
         ite += card_util
+
+        if ite > passed_out:
+            print('Сгенерировано', passed_out, 'строк.')
+            passed_out += 10000
+
         if ite > iters:
             card_util -= (ite - iters)
         for ut in range(card_util):
             writer.writerow(buyer(card, shops, connections, goods))
 mycsvfile.close()
+print('Датасет сохранён в файл', curtime, '.csv.')
